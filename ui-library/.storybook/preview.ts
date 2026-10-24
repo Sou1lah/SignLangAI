@@ -20,6 +20,9 @@ const preview: Preview = {
         order: [
           "Home",
           "Foundations",
+          "Progress",
+          "Navigation",
+          "Learning Path",
           "Buttons",
           "Call",
           "Chat",

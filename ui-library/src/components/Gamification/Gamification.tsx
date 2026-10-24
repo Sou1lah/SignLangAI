@@ -6,8 +6,11 @@ import {
   Trophy,
 } from "lucide-react-native";
 
+import { AnimatedFlame } from "../../animation/AnimatedFlame";
+import { AnimatedHearts } from "../../animation/AnimatedHearts";
+import { PopIn } from "../../animation/PopIn";
 import { DuoProgress } from "../Foundations/DuoProgress";
-import { CloneHeartIcon, ClonePointsIcon } from "../Icons/CloneReferenceIcons";
+import { ClonePointsIcon } from "../Icons/CloneReferenceIcons";
 import { learningColors, radius, spacing, typography } from "../../tokens";
 
 export function HeartsBar({
@@ -22,7 +25,7 @@ export function HeartsBar({
       accessibilityLabel={`${count} of ${max} hearts`}
       style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
     >
-      <CloneHeartIcon size={23} />
+      <AnimatedHearts count={count} />
       <Text
         style={{
           color: count > 0 ? learningColors.red : learningColors.muted,
@@ -162,7 +165,9 @@ export function StreakBadge({
       accessibilityLabel={`${days} day streak`}
       style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
     >
-      <Flame color={color} fill={active ? color : "transparent"} size={24} />
+      <AnimatedFlame active={active}>
+        <Flame color={color} fill={active ? color : "transparent"} size={24} />
+      </AnimatedFlame>
       <Text
         style={{
           color,
@@ -355,24 +360,39 @@ export function AchievementBadge({
         backgroundColor: learningColors.snow,
       }}
     >
-      <View
-        style={{
-          width: 52,
-          height: 52,
-          alignItems: "center",
-          justifyContent: "center",
-          borderWidth: 2,
-          borderColor: unlocked ? "#e0aa00" : learningColors.border,
-          borderRadius: 26,
-          backgroundColor: unlocked ? learningColors.gold : learningColors.canvas,
-        }}
-      >
-        {unlocked ? (
-          <Trophy color={learningColors.snow} size={24} />
-        ) : (
+      {unlocked ? (
+        <PopIn>
+          <View
+            style={{
+              width: 52,
+              height: 52,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 2,
+              borderColor: "#e0aa00",
+              borderRadius: 26,
+              backgroundColor: learningColors.gold,
+            }}
+          >
+            <Trophy color={learningColors.snow} size={24} />
+          </View>
+        </PopIn>
+      ) : (
+        <View
+          style={{
+            width: 52,
+            height: 52,
+            alignItems: "center",
+            justifyContent: "center",
+            borderWidth: 2,
+            borderColor: learningColors.border,
+            borderRadius: 26,
+            backgroundColor: learningColors.canvas,
+          }}
+        >
           <Award color={learningColors.muted} size={24} />
-        )}
-      </View>
+        </View>
+      )}
       <View style={{ flex: 1, gap: spacing.sm }}>
         <Text
           style={{

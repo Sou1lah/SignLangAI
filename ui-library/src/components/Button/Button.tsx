@@ -1,4 +1,5 @@
-import { Pressable, Text, View } from "react-native";
+import { useRef } from "react";
+import { Animated, Pressable, Text, View } from "react-native";
 import type { TextStyle, ViewStyle } from "react-native";
 import { Ellipsis, Sparkles } from "lucide-react-native";
 
@@ -28,6 +29,7 @@ export type ButtonProps = {
   iconOnly?: boolean;
   leadingIcon?: boolean;
   accessibilityLabel?: string;
+  onPress?: () => void;
 };
 
 const sizeValues: Record<ButtonSize, { height: number; horizontal: number }> = {
@@ -153,12 +155,22 @@ export function Button({
   iconOnly = false,
   leadingIcon = false,
   accessibilityLabel,
+  onPress = () => undefined,
 }: ButtonProps) {
   const disabled = visualState === "disabled" || visualState === "loading";
   const loading = visualState === "loading";
   const pressed = visualState === "pressed";
   const palette = variantColors[variant];
   const dimensions = sizeValues[size];
+  const pressProgress = useRef(new Animated.Value(pressed ? 1 : 0)).current;
+
+  const animatePress = (toValue: number) => {
+    Animated.timing(pressProgress, {
+      toValue,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  };
 
   const buttonStyle = (isPressed: boolean): ViewStyle => ({
     alignItems: "center",
@@ -176,7 +188,6 @@ export function Button({
     minWidth: 44,
     opacity: disabled ? 0.5 : 1,
     paddingHorizontal: iconOnly ? spacing.none : dimensions.horizontal,
-    transform: isPressed && palette.hasLip ? [{ translateY: 2 }] : undefined,
   });
 
   const textStyle: TextStyle = {
@@ -194,28 +205,57 @@ export function Button({
       accessibilityRole="button"
       accessibilityState={{ busy: loading, disabled }}
       disabled={disabled}
-      onPress={() => undefined}
-      style={({ pressed: isPressed }) => buttonStyle(pressed || isPressed)}
+      onPress={onPress}
+      onPressIn={() => {
+        if (!pressed) animatePress(1);
+      }}
+      onPressOut={() => {
+        if (!pressed) animatePress(0);
+      }}
     >
-      {loading ? (
-        <View
-          accessible={false}
-          style={{
-            borderColor: palette.foreground,
-            borderRadius: radius.pill,
-            borderTopColor: "transparent",
-            borderWidth: 2,
-            height: 16,
-            width: 16,
-          }}
-        />
-      ) : null}
-      {(leadingIcon || iconOnly) && !loading
-        ? iconOnly
-          ? <Ellipsis color={palette.foreground} size={20} />
-          : <Sparkles color={palette.foreground} size={16} />
-        : null}
-      {!iconOnly && <Text style={textStyle}>{loading ? "Loading" : label}</Text>}
+      {({ pressed: isPressed }) => (
+        <Animated.View
+          style={[
+            buttonStyle(pressed || isPressed),
+            {
+              borderBottomWidth: palette.hasLip
+                ? pressProgress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [4, 2],
+                  })
+                : 0,
+              transform: [
+                {
+                  translateY: pressProgress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 2],
+                  }),
+                },
+              ],
+            },
+          ]}
+        >
+          {loading ? (
+            <View
+              accessible={false}
+              style={{
+                borderColor: palette.foreground,
+                borderRadius: radius.pill,
+                borderTopColor: "transparent",
+                borderWidth: 2,
+                height: 16,
+                width: 16,
+              }}
+            />
+          ) : null}
+          {(leadingIcon || iconOnly) && !loading
+            ? iconOnly
+              ? <Ellipsis color={palette.foreground} size={20} />
+              : <Sparkles color={palette.foreground} size={16} />
+            : null}
+          {!iconOnly && <Text style={textStyle}>{loading ? "Loading" : label}</Text>}
+        </Animated.View>
+      )}
     </Pressable>
   );
 }

@@ -4,4 +4,6 @@ export * from "./components/Exercises/OptionCard";
 export * from "./components/Foundations/DuoProgress";
 export * from "./components/Foundations/DuoTabBar";
 export * from "./components/Gamification/Gamification";
+export * from "./components/LearningPath/LearningPath";
+export * from "./animation";
 export * from "./tokens";

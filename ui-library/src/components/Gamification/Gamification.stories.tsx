@@ -4,7 +4,6 @@ import { Text, View } from "react-native";
 import {
   AchievementBadge,
   HeartsBar,
-  Leaderboard,
   StreakCard,
   StreakBadge,
   StreakWeek,
@@ -45,17 +44,6 @@ export const Overview: Story = {
         <Text style={{ fontWeight: "700" }}>Achievement</Text>
         <AchievementBadge title="Consistent learner" progress={0.72} unlocked={false} />
         <AchievementBadge title="First steps" progress={1} unlocked />
-      </View>
-      <View style={{ gap: 12 }}>
-        <Text style={{ fontWeight: "700" }}>Leaderboard</Text>
-        <Leaderboard
-          meId="you"
-          entries={[
-            { userId: "ava", name: "Ava", xp: 420, rank: 1 },
-            { userId: "you", name: "You", xp: 360, rank: 2 },
-            { userId: "leo", name: "Leo", xp: 290, rank: 3 },
-          ]}
-        />
       </View>
     </View>
   ),

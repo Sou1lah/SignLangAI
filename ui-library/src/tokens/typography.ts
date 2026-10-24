@@ -1,5 +1,5 @@
 export const typography = {
-  fontFamily: "system-ui, sans-serif",
+  fontFamily: "Nunito, system-ui, sans-serif",
   sizes: {
     small: 13,
     medium: 15,
