@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "packageManager": "pnpm@10.25.0",
+  "scripts": {
+    "dev": "make dev",
+    "build": "turbo build",
+    "lint": "make lint",
+    "test": "make test",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "3.9.10",
+    "turbo": "2.11.10"
+  }
+}

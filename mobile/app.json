@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "SignLangAI",
+    "slug": "signlangai",
+    "scheme": "signlangai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": ["expo-router"]
+  }
+}

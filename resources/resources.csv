@@ -1,0 +1,59 @@
+#,Category,Name,Stack / Use,Link,License checked
+1,UI Component Libraries,React Native Paper,RN,https://callstack.github.io/react-native-paper/,No
+2,UI Component Libraries,Gluestack UI,RN / Web,https://gluestack.io/,No
+3,UI Component Libraries,NativeWind (Tailwind for RN),RN,https://www.nativewind.dev/,No
+4,UI Component Libraries,React Native Reusables (shadcn-style),RN,https://reactnativereusables.com/,No
+5,UI Component Libraries,Tamagui,RN / Web,https://tamagui.dev/,No
+6,UI Component Libraries,React Native Elements,RN,https://reactnativeelements.com/,No
+7,UI Component Libraries,shadcn/ui,Web,https://ui.shadcn.com/,No
+8,UI Component Libraries,Mantine,Web,https://mantine.dev/,No
+9,UI Component Libraries,Chakra UI,Web,https://chakra-ui.com/,No
+10,UI Component Libraries,Radix Primitives,Web,https://www.radix-ui.com/,No
+11,UI Component Libraries,Flutter Material widgets,Flutter,https://docs.flutter.dev/ui/widgets/material,No
+12,UI Component Libraries,pub.dev (Flutter packages),Flutter,https://pub.dev/,No
+13,Design Systems & Guidelines,Duolingo Design,Official brand/design principles,https://design.duolingo.com/,No
+14,Design Systems & Guidelines,Material Design 3,Component and motion guidance,https://m3.material.io/,No
+15,Design Systems & Guidelines,Apple Human Interface Guidelines,iOS patterns,https://developer.apple.com/design/human-interface-guidelines/,No
+16,Design Systems & Guidelines,WCAG,Accessibility standard,https://www.w3.org/WAI/standards-guidelines/wcag/,No
+17,Design Systems & Guidelines,Nielsen Norman Group,UX research,https://www.nngroup.com/,No
+18,Inspiration & Figma Kits,Mobbin,Real app screen and flow library,https://mobbin.com/,No
+19,Inspiration & Figma Kits,Page Flows,User flow recordings,https://pageflows.com/,No
+20,Inspiration & Figma Kits,Refero,Web/app design references,https://refero.design/,No
+21,Inspiration & Figma Kits,Figma Community,Free UI kits and templates,https://www.figma.com/community,No
+22,Inspiration & Figma Kits,Dribbble (Duolingo search),Concept designs,https://dribbble.com/search/duolingo,No
+23,Animation & Motion,React Native Reanimated,RN,https://docs.swmansion.com/react-native-reanimated/,No
+24,Animation & Motion,React Native Gesture Handler,RN,https://docs.swmansion.com/react-native-gesture-handler/,No
+25,Animation & Motion,Moti,RN,https://moti.fyi/,No
+26,Animation & Motion,React Native Skia,RN,https://shopify.github.io/react-native-skia/,No
+27,Animation & Motion,lottie-react-native,RN,https://github.com/lottie-react-native/lottie-react-native,No
+28,Animation & Motion,LottieFiles (free animations),All,https://lottiefiles.com/,No
+29,Animation & Motion,Rive (interactive mascot/characters),All,https://rive.app/,No
+30,Animation & Motion,flutter_animate,Flutter,https://pub.dev/packages/flutter_animate,No
+31,Animation & Motion,Flutter Lottie,Flutter,https://pub.dev/packages/lottie,No
+32,Gamification UI,react-native-confetti-cannon,Lesson-complete celebration,https://github.com/VincentCATILLON/react-native-confetti-cannon,No
+33,Gamification UI,canvas-confetti,Web confetti,https://www.npmjs.com/package/canvas-confetti,No
+34,Gamification UI,Flutter confetti,Flutter confetti,https://pub.dev/packages/confetti,No
+35,Gamification UI,react-native-svg,"Progress rings, path maps",https://github.com/software-mansion/react-native-svg,No
+36,Gamification UI,Octalysis framework,Gamification theory,https://yukaichou.com/gamification-examples/octalysis-complete-gamification-framework/,No
+37,Exercise Interactions,react-native-draggable-flatlist,Word ordering,https://github.com/computerjazz/react-native-draggable-flatlist,No
+38,Exercise Interactions,dnd-kit,Web drag and drop,https://dndkit.com/,No
+39,Exercise Interactions,Expo Speech,Text-to-speech,https://docs.expo.dev/versions/latest/sdk/speech/,No
+40,Exercise Interactions,Expo Haptics,Tactile feedback,https://docs.expo.dev/versions/latest/sdk/haptics/,No
+41,Exercise Interactions,Expo,App framework/tooling,https://expo.dev/,No
+42,Icons,Lucide,Icon set,https://lucide.dev/,No
+43,Icons,Phosphor Icons,Icon set,https://phosphoricons.com/,No
+44,Icons,Tabler Icons,Icon set,https://tabler.io/icons,No
+45,Icons,Heroicons,Icon set,https://heroicons.com/,No
+46,Icons,Iconify (aggregator),Icon aggregator,https://iconify.design/,No
+47,Illustrations & Mascot Assets,unDraw,Illustrations,https://undraw.co/,No
+48,Illustrations & Mascot Assets,Storyset,Illustrations,https://storyset.com/,No
+49,Illustrations & Mascot Assets,Open Peeps,Illustrations,https://www.openpeeps.com/,No
+50,Illustrations & Mascot Assets,DrawKit,Illustrations,https://www.drawkit.com/,No
+51,Illustrations & Mascot Assets,Humaaans,Illustrations,https://www.humaaans.com/,No
+52,Typography & Sound,Nunito,Rounded font close to Duolingo's feel,https://fonts.google.com/specimen/Nunito,No
+53,Typography & Sound,Fredoka,Playful headings,https://fonts.google.com/specimen/Fredoka,No
+54,Typography & Sound,Freesound,Sound effects (check each license),https://freesound.org/,No
+55,Typography & Sound,Mixkit,Free SFX,https://mixkit.co/free-sound-effects/,No
+56,Reference Projects & Learning Logic,GitHub: duolingo-clone topic,Open-source clones,https://github.com/topics/duolingo-clone,No
+57,Reference Projects & Learning Logic,FSRS (spaced repetition),Scheduling algorithm,https://github.com/open-spaced-repetition/fsrs4anki,No
+58,Reference Projects & Learning Logic,ts-fsrs,FSRS in TypeScript,https://github.com/open-spaced-repetition/ts-fsrs,No
