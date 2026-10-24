@@ -1,0 +1,124 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Design System" />
+
+# Learning UI Design System
+
+A categorized, display-only visual reference for the learning app: bright action green, friendly rounded shapes, clear type hierarchy, and simple reusable interface patterns. This guide is based on the supplied design analysis; Duolingo mascots, logos, proprietary fonts, and sounds are not included.
+
+## Color palette
+
+Use saturated green for primary actions and selected states. Navy anchors display text; blue, red, orange, gold, and purple are supporting accents.
+
+<div className="design-swatches">
+  <div><i style={{ background: "#58cc02" }} /><strong>Owl green</strong><code>#58cc02 · primary action</code></div>
+  <div><i style={{ background: "#58a700" }} /><strong>Pressed green</strong><code>#58a700 · pressed action</code></div>
+  <div><i style={{ background: "#d7ffb8" }} /><strong>Soft green</strong><code>#d7ffb8 · selected surface</code></div>
+  <div><i style={{ background: "#042c60" }} /><strong>Display navy</strong><code>#042c60 · display text</code></div>
+  <div><i style={{ background: "#3c3c3c" }} /><strong>Body ink</strong><code>#3c3c3c · primary text</code></div>
+  <div><i style={{ background: "#777777" }} /><strong>Muted body</strong><code>#777777 · secondary text</code></div>
+  <div><i style={{ background: "#afafaf" }} /><strong>Soft gray</strong><code>#afafaf · quiet and disabled</code></div>
+  <div><i style={{ background: "#ffffff" }} /><strong>Canvas white</strong><code>#ffffff · page surface</code></div>
+  <div><i style={{ background: "#1cb0f6" }} /><strong>Macaw blue</strong><code>#1cb0f6 · secondary and focus</code></div>
+  <div><i style={{ background: "#ff4b4b" }} /><strong>Cardinal red</strong><code>#ff4b4b · error</code></div>
+  <div><i style={{ background: "#ff9600" }} /><strong>Fox orange</strong><code>#ff9600 · streak</code></div>
+  <div><i style={{ background: "#ffc800" }} /><strong>Bee gold</strong><code>#ffc800 · milestone</code></div>
+  <div><i style={{ background: "#ce82ff" }} /><strong>Beetle purple</strong><code>#ce82ff · membership accent</code></div>
+  <div><i style={{ background: "#e5e5e5" }} /><strong>Hairline</strong><code>#e5e5e5 · border and divider</code></div>
+</div>
+
+Keep action green focused on actions and selected states; do not use it for large page backgrounds or body text. Accent names describe the source vocabulary, not character artwork.
+
+## Typography
+
+Use a clear display hierarchy and compact UI labels. The source typefaces are proprietary, so these examples use local system fonts only.
+
+<div className="design-type-samples">
+  <p className="design-display">Learn something new <small>Display · 64 / 700</small></p>
+  <p className="design-section">Small steps add up. <small>Section · 32 / 700</small></p>
+  <p className="design-body">Clear instructions make each lesson easier to follow. <small>Body · 17 / 500</small></p>
+  <p className="design-label">Continue learning <small>Button · 15 / 700</small></p>
+  <p className="design-caption">A short supporting note or timestamp. <small>Caption · 13 / 500</small></p>
+</div>
+
+## Spacing and layout
+
+Use an 8px-based rhythm, 16px page gutters, a readable content width, and generous section separation.
+
+| Token | Value |
+| --- | ---: |
+| xs | 8px |
+| sm | 10px |
+| md | 12px |
+| base | 16px |
+| lg | 24px |
+| xl | 32px |
+| xxl | 48px |
+| section | 96px |
+
+Layout reference: centered content around 1024px wide, 16px outer gutters, and about 96px between major page sections.
+
+## Shapes and elevation
+
+Rounded rectangles and full pills carry the friendly interface tone. Keep elevation flat; primary buttons use a short solid bottom lip rather than diffuse shadows.
+
+<div className="design-shapes">
+  <div><span style={{ borderRadius: 8 }}>8px</span><strong>Small radius</strong><p>Inputs and compact chips.</p></div>
+  <div><span style={{ borderRadius: 12 }}>12px</span><strong>Medium radius</strong><p>Cards and grouped surfaces.</p></div>
+  <div><span style={{ borderRadius: 16 }}>16px</span><strong>Button radius</strong><p>Primary and secondary actions.</p></div>
+  <div><span style={{ borderRadius: 9999 }}>pill</span><strong>Pill radius</strong><p>Status badges and rewards.</p></div>
+</div>
+
+## Buttons
+
+Primary actions are green, uppercase, and tactile. Secondary actions use a white surface with restrained blue text; quiet actions remain unfilled. These are static examples.
+
+<div className="design-button-examples">
+  <div>
+    <span className="design-button design-button-primary">Get started</span>
+    <span className="design-button design-button-primary design-button-pressed">Pressed</span>
+    <span className="design-button design-button-disabled">Disabled</span>
+    <p>Primary · 50px tall · 16px radius · 4px solid lip</p>
+  </div>
+  <div>
+    <span className="design-button design-button-secondary">I already have an account</span>
+    <span className="design-button design-button-quiet">Learn more</span>
+    <p>Secondary outline · Quiet text action</p>
+  </div>
+</div>
+
+The [Button stories](?path=/story/buttons-button--all-buttons) show the implemented showcase component. Preserve a visible keyboard focus outline and use at least a 44px touch target.
+
+## Navigation and chips
+
+Navigation remains low-contrast until selected. Selection uses a soft green surface; language chips stay compact and readable.
+
+<div className="design-navigation">
+  <strong>Learning</strong><span>Courses</span><span>Practice</span><span>Profile</span>
+</div>
+
+<div className="design-chip-row">
+  <span>English</span><span className="selected">Spanish · Active</span><span>French</span>
+</div>
+
+Reference: 70px top navigation, white surface, 16px horizontal inset. Selected chips use a soft green fill with darker green text.
+
+## Cards and badges
+
+Content cards sit flat on the canvas. Semantic badges communicate streak, error, and milestone states with text as well as color.
+
+<div className="design-card-examples">
+  <div><strong>Illustration scene card</strong><p>Pair concise copy with original or licensed artwork. Keep the surface flat.</p><span className="design-art-placeholder">Art placeholder</span></div>
+  <div><strong>Status badges</strong><p><span className="design-badge">Streak</span> <span className="design-badge design-badge-error">Error</span> <span className="design-badge design-badge-gold">Milestone</span></p><small>Use color with text, not color alone.</small></div>
+</div>
+
+## Forms and feedback
+
+Inputs use a 48px control height, 8px radius, and clear focus treatment. Hairline dividers separate content without visual weight.
+
+<div className="design-card-examples">
+  <div><strong>Text input</strong><label className="design-input-label">Email address</label><input className="design-input" value="learner@example.com" readOnly /><small>48px height · 8px radius · 2px border · blue focus</small></div>
+  <div><strong>Divider and inline link</strong><p>Supporting information</p><hr /><p>Read the <a href="?path=/docs/home-introduction--docs">learning guide</a>.</p><small>1px #e5e5e5 divider</small></div>
+</div>
+
+The source notes do not define complete validation behavior. Success, warning, and error patterns should be designed and accessibility-checked before use.

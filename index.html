@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SignPath - App Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5FB;--card:#FFFFFF;--ink:#14213D;--mute:#5B6785;--line:#E1E6F2;
+  --pri:#2D5BFF;--pri-d:#1B3FC4;--pri-t:#E6ECFF;--hot:#FF6B5B;--sun:#FFC83D;--ok:#14A87E;--ok-t:#DDF6EC;
+  --video:#18233F;--on-pri:#fff;
+  color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1424;--card:#171F36;--ink:#EEF1FA;--mute:#9AA6C6;--line:#27304D;--pri:#6C8BFF;--pri-d:#4A69E6;--pri-t:#1F2A55;--ok-t:#10372E;--video:#0A0F1E;--on-pri:#0E1424;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1424;--card:#171F36;--ink:#EEF1FA;--mute:#9AA6C6;--line:#27304D;--pri:#6C8BFF;--pri-d:#4A69E6;--pri-t:#1F2A55;--ok-t:#10372E;--video:#0A0F1E;--on-pri:#0E1424;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box;margin:0}
+body{height:100%;background:var(--bg);color:var(--ink);font-family:'Lexend',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px;line-height:1.45}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.app{max-width:430px;height:100%;margin:0 auto;display:flex;flex-direction:column;background:var(--bg);position:relative;overflow:hidden}
+@media(min-width:600px){.app{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+.top{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+.top h1{font-size:17px;font-weight:700;flex:1}
+.chip{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px;background:var(--bg)}
+.chip svg{width:16px;height:16px}
+.main{flex:1;overflow-y:auto;padding:16px}
+.nav{display:flex;background:var(--card);border-top:1px solid var(--line)}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 8px;font-size:11px;font-weight:500;color:var(--mute)}
+.nav button[aria-current="page"]{color:var(--pri);font-weight:700}
+h2{font-size:15px;font-weight:700;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.row{display:flex;align-items:center;gap:12px}
+.grow{flex:1;min-width:0}
+.sub{color:var(--mute);font-size:13px}
+.btn{display:block;width:100%;padding:13px;border-radius:14px;background:var(--pri);color:var(--on-pri);font-weight:700;text-align:center;box-shadow:0 4px 0 var(--pri-d)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--pri-d)}
+.btn.alt{background:var(--card);color:var(--pri);border:1.5px solid var(--line);box-shadow:none}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .4s}
+.quest{margin-bottom:16px}
+.unit{margin:18px 0 6px;padding:12px 14px;border-radius:14px;background:var(--pri);color:var(--on-pri)}
+.unit b{display:block;font-size:15px}.unit span{font-size:12px;opacity:.85}
+.path{display:flex;flex-direction:column;align-items:center;gap:14px;padding:14px 0}
+.node{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:var(--ok);color:#fff;box-shadow:0 5px 0 #0B7A5A}
+.node.cur{background:var(--pri);box-shadow:0 5px 0 var(--pri-d);outline:5px solid var(--pri-t)}
+.node.lock{background:var(--line);color:var(--mute);box-shadow:0 5px 0 var(--mute);opacity:.8}
+.node svg{width:28px;height:28px}
+.lab{font-size:12px;color:var(--mute);margin-top:-8px}
+.sheet{position:absolute;inset:0;background:var(--bg);display:flex;flex-direction:column;z-index:5;animation:up .25s ease-out}
+@keyframes up{from{transform:translateY(24px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.sheet{animation:none}.bar i{transition:none}}
+.video{position:relative;aspect-ratio:4/3;background:var(--video);border-radius:18px;display:grid;place-items:center;overflow:hidden}
+.video .stage{transition:transform .2s}
+.video .cap{position:absolute;left:0;right:0;bottom:0;padding:10px;background:rgba(0,0,0,.55);color:#fff;text-align:center;font-weight:600}
+.hand{animation:wave 1.6s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes wave{50%{transform:rotate(14deg) translateY(-4px)}}
+.ctl{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
+.pill{padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font-size:13px;font-weight:600}
+.pill[aria-pressed="true"]{background:var(--pri-t);border-color:var(--pri);color:var(--pri)}
+.cam{border-radius:18px;aspect-ratio:4/3;background:var(--video);position:relative;display:grid;place-items:center;color:#fff;overflow:hidden}
+.cam .dot{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--sun)}
+.meter{margin:12px 0}
+.seg{display:flex;background:var(--line);border-radius:12px;padding:3px;margin-bottom:14px}
+.seg button{flex:1;padding:8px;border-radius:10px;font-weight:600;font-size:13px;color:var(--mute)}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink)}
+.search{width:100%;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;margin-bottom:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;flex:none}
+.li{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);width:100%;text-align:left}
+.thumb{width:56px;height:42px;border-radius:10px;background:var(--video);display:grid;place-items:center;color:#fff;flex:none}
+.thumb svg{width:18px;height:18px}
+.badge{min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--hot);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+.msg{max-width:78%;margin:8px 0;padding:10px 12px;border-radius:16px;background:var(--card);border:1px solid var(--line)}
+.msg.me{margin-left:auto;background:var(--pri-t);border-color:transparent}
+.msg .thumb{width:100%;height:110px}
+.msg small{display:block;margin-top:6px;color:var(--mute)}
+.compose{display:flex;gap:8px;padding:10px 12px;background:var(--card);border-top:1px solid var(--line);align-items:center}
+.compose input{flex:1;padding:11px 14px;border-radius:99px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;min-width:0}
+.ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--pri-t);color:var(--pri);flex:none}
+.ic.rec{background:var(--hot);color:#fff}
+.rank{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:14px}
+.rank.me{background:var(--pri-t);font-weight:700}
+.rank .n{width:24px;text-align:center;font-weight:700;color:var(--mute)}
+.zone{font-size:12px;font-weight:600;color:var(--ok);padding:6px 12px}
+.zone.d{color:var(--hot)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.stat{text-align:center;padding:12px 6px}.stat b{display:block;font-size:20px}
+.set{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);width:100%;text-align:left}
+.sw{width:46px;height:28px;border-radius:99px;background:var(--line);position:relative;flex:none;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s}
+[aria-checked="true"].sw{background:var(--ok)}[aria-checked="true"].sw::after{transform:translateX(18px)}
+.toast{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;font-size:13px;z-index:9}
+
+.call{background:var(--video);color:#fff;z-index:7}
+.call .sub{color:#9AA6C6}
+.callbody{flex:1;display:flex;flex-direction:column;gap:10px;min-height:0;padding-bottom:6px}
+.pip{position:absolute;top:10px;right:10px;width:72px;height:56px;border-radius:10px;background:#2A3558;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;gap:2px}
+.pip svg{width:18px;height:18px}
+.tiles{display:flex;gap:8px;padding:0 12px}
+.tl2{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border-radius:12px;background:rgba(255,255,255,.08);border:2px solid transparent}
+.tl2.host{border-color:var(--sun)}.tl2 small{font-size:11px}
+.trp{flex:1;min-height:0;display:flex;flex-direction:column;margin:0 12px;padding:12px;border-radius:16px;background:rgba(255,255,255,.08)}
+.tl{flex:1;overflow-y:auto}
+.ln{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.ln .sp{font-size:12px;color:var(--sun);font-weight:600}
+.ln>div:nth-child(2){font-size:16px;font-weight:500}
+.ln .cf{font-size:11px;color:#9AA6C6}
+.pill.sm{padding:4px 9px;font-size:12px;background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.pill.sm[aria-pressed="true"]{background:var(--pri);border-color:var(--pri);color:#fff}
+.live{display:flex;align-items:center;gap:6px;padding-top:8px}
+.pd{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+@media(prefers-reduced-motion:reduce){.pd{animation:none}}
+.fine{font-size:11px;margin-top:6px}
+.ctrls{display:flex;justify-content:space-around;padding:10px 8px 14px}
+.cb{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:#fff}
+.cb svg{width:48px;height:48px;padding:13px;border-radius:50%;background:rgba(255,255,255,.14)}
+.cb[aria-pressed="true"] svg{background:var(--pri)}
+.cb.end svg{background:var(--hot)}
+.tag{padding:3px 9px;border-radius:99px;background:var(--ok-t);color:var(--ok);font-size:11px;font-weight:700;white-space:nowrap}
+
+button.msg{font:inherit;color:inherit;text-align:left;user-select:none;-webkit-user-select:none;touch-action:manipulation;-webkit-touch-callout:none}
+.mw{display:flex;flex-direction:column;align-items:flex-start;max-width:82%;margin:8px 0}
+.mw.me{margin-left:auto;align-items:flex-end}
+.mw .msg{margin:0;max-width:100%}
+.mw .vm{width:220px}
+.mini{margin-top:4px;font-size:12px;font-weight:600;color:var(--pri);padding:4px 2px;text-decoration:underline}
+.mw small.sub{margin-top:2px;max-width:220px}
+.signpop{position:absolute;inset:0;background:rgba(10,15,30,.6);display:grid;place-items:center;padding:20px;z-index:8}
+.spc{background:var(--card);border-radius:20px;padding:14px;width:100%;max-width:340px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.call .seg{background:rgba(255,255,255,.12);margin:0 0 10px}
+.call .seg button{color:#cbd3ea;font-size:12px}
+.call .seg button[aria-pressed="true"]{background:var(--pri);color:#fff}
+.holdbtn{padding:0 12px;height:44px;border-radius:99px;background:var(--pri-t);color:var(--pri);font-weight:700;font-size:13px;flex:none;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+const P={
+home:'<path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>',book:'<path d="M4 4h7a3 3 0 013 3v13a2 2 0 00-2-2H4zM20 4h-7a3 3 0 00-3 3v13a2 2 0 012-2h8z"/>',
+chat:'<path d="M21 12a8 8 0 01-11.5 7.2L3 21l1.8-6A8 8 0 1121 12z"/>',trophy:'<path d="M8 4h8v6a4 4 0 01-8 0zM8 6H4v2a4 4 0 004 4M16 6h4v2a4 4 0 01-4 4M12 14v4M8 21h8"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>',fire:'<path d="M12 3c1 4 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>',
+star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',check:'<path d="M5 12l5 5 9-10"/>',
+play:'<path d="M7 4l13 8-13 8z"/>',lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',
+video:'<rect x="3" y="6" width="13" height="12" rx="3"/><path d="M16 10l5-3v10l-5-3"/>',back:'<path d="M15 5l-7 7 7 7"/>',
+send:'<path d="M4 12l16-8-6 16-3-7z"/>',cam:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+close:'<path d="M6 6l12 12M18 6L6 18"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>'};
+const ic=n=>`<svg viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
+const hand=`<svg class="hand" viewBox="0 0 100 100" style="width:110px;height:110px;stroke:#fff;stroke-width:3"><path d="M30 55V30a5 5 0 0110 0v20M40 50V20a5 5 0 0110 0v30M50 50V22a5 5 0 0110 0v30M60 52V30a5 5 0 0110 0v32c0 18-12 28-26 28-12 0-20-8-24-18l-6-14a5 5 0 018-5l8 9" fill="rgba(255,255,255,.12)"/></svg>`;
+
+const S={tab:'learn',sub:null,xp:340,streak:12,goal:0.6,lesson:null,step:0,speed:1,loop:false,mirror:false,
+set:{captions:true,vibe:true,data:false,device:true,lefty:false},lg:'weekly',chat:null,cs:'private',call:null,iv:null,joined:{},lang:'English',tr:true,cm:'s2t',tts:true,hand:false,rec:false,fav:{},q:'',cat:'All',
+units:[{t:'Unit 1: First signs',s:'Greetings and basics',l:[['Hello','done'],['Thank you','done'],['Please','cur'],['Sorry','lock'],['Review','lock']]},
+{t:'Unit 2: Fingerspelling',s:'Alphabet A to M',l:[['A to F','lock'],['G to M','lock'],['Quiz','lock']]}]};
+const DICT=[['Hello','Greetings'],['Goodbye','Greetings'],['Thank you','Greetings'],['Please','Greetings'],['Water','Food'],['Eat','Food'],['Hungry','Food'],['Mother','Family'],['Father','Family'],['Help','Emergency'],['Doctor','Emergency'],['Pain','Emergency']];
+const CHATS=[['Amira','Practice partner',2,'#2D5BFF'],['Coach Yassine','Deaf tutor',0,'#14A87E'],['Study group A','12 members',5,'#FF6B5B'],['Nour','Friend',0,'#8A5CF6']];
+const BOARD=[['Lina',1280],['Karim',1190],['Sara',1105],['Omar',990],['You',340],['Hana',310],['Adel',255],['Meriem',190]];
+
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;$('#app').append(e);setTimeout(()=>e.remove(),1800)}
+function go(t){S.tab=t;S.chat=null;S.sub=null;render()}
+
+function hdr(title,extra=''){return `<header class="top"><h1>${title}</h1>${extra}</header>`}
+function stats(){return `<span class="chip" style="color:var(--hot)">${ic('fire')}${S.streak}</span><span class="chip" style="color:#B8860B">${ic('star')}${S.xp}</span>`}
+
+function learn(){
+ return hdr('Learn',stats())+`<div class="main">
+ <div class="card quest"><div class="row"><div class="grow"><b>Daily goal</b><div class="sub">${Math.round(S.goal*100)}% of 10 min done</div></div><div class="sub">Sign of the day: <b style="color:var(--ink)">Friend</b></div></div>
+ <div class="bar" style="margin-top:10px"><i style="width:${S.goal*100}%"></i></div></div>
+ ${S.units.map((u,ui)=>`<div class="unit"><b>${u.t}</b><span>${u.s}</span></div><div class="path">${u.l.map((n,i)=>{
+  const off=[0,-34,-48,-24,10][i%5];return `<div style="transform:translateX(${off}px);text-align:center"><button class="node ${n[1]}" aria-label="${n[0]}, ${n[1]==='done'?'completed':n[1]==='cur'?'start':'locked'}" ${n[1]==='lock'?'disabled':''} onclick="openLesson(${ui},${i})">${ic(n[1]==='done'?'check':n[1]==='lock'?'lock':'play')}</button><div class="lab" style="margin-top:6px">${n[0]}</div></div>`}).join('')}</div>`).join('')}
+ </div>`}
+
+function openLesson(u,i){S.lesson={u,i,w:S.units[u].l[i][0]};S.step=0;render()}
+function openSign(w){S.lesson={u:-1,i:-1,w};S.step=0;render()}
+function lessonView(){
+ const L=S.lesson,pr=S.step===1,dn=S.step===2;
+ const body=dn?`<div style="text-align:center;padding:40px 0"><div class="node" style="margin:0 auto 18px">${ic('check')}</div><h2 style="font-size:20px">Lesson complete</h2><p class="sub">+10 XP. Streak extended to ${S.streak} days.</p></div><button class="btn" onclick="finish()">Continue</button>`
+ :pr?`<div class="cam" id="cam"><span class="sub" style="color:#fff">Camera preview (hand and face tracking)</span></div>
+   <div class="meter"><div class="row"><b class="grow">Match confidence</b><b id="cf">0%</b></div><div class="bar"><i id="cb" style="width:0"></i></div><p class="sub" id="fb" style="margin-top:8px">Sign "${L.w}" in front of the camera. Keep both hands and your face in frame.</p></div>
+   <button class="btn" onclick="S.step=2;render()">Finish practice</button>`
+ :`<div class="video"><div class="stage" id="stage" style="transform:scaleX(${S.mirror?-1:1})">${hand}</div>${S.set.captions?`<div class="cap">${L.w}</div>`:''}</div>
+   <div class="ctl"><button class="pill" aria-pressed="${S.speed===.5}" onclick="S.speed=S.speed===.5?1:.5;render()">Slow 0.5x</button><button class="pill" aria-pressed="${S.loop}" onclick="S.loop=!S.loop;render()">Loop</button><button class="pill" aria-pressed="${S.mirror}" onclick="S.mirror=!S.mirror;render()">Mirror</button></div>
+   <div class="card" style="margin-bottom:14px"><b>How to sign "${L.w}"</b><p class="sub">Watch the handshape, movement and facial expression. Signer: Deaf instructor.</p></div>
+   <button class="btn" onclick="${L.u<0?'closeLesson()':'startPractice()'}">${L.u<0?'Done':'Practice with camera'}</button>`;
+ return `<div class="sheet"><header class="top"><button class="ic" style="background:none" aria-label="Close" onclick="closeLesson()">${ic('close')}</button><h1>${L.w}</h1></header><div class="main">${body}</div></div>`}
+function closeLesson(){S.lesson=null;render()}
+function startPractice(){S.step=1;render();let v=0;const t=setInterval(()=>{if(!$('#cf')){clearInterval(t);return}
+ v=Math.min(92,v+Math.random()*14);$('#cf').textContent=Math.round(v)+'%';$('#cb').style.width=v+'%';
+ if(v>=92){$('#fb').textContent='Strong match. Try a slightly wider movement for more clarity.';clearInterval(t)}},500);
+ const c=$('#cam');for(let k=0;k<12;k++){const d=document.createElement('i');d.className='dot';d.style.left=(30+Math.random()*40)+'%';d.style.top=(25+Math.random()*50)+'%';c.append(d)}}
+function finish(){const L=S.lesson;if(L.u>=0){const ls=S.units[L.u].l;if(ls[L.i][1]==='cur'){ls[L.i][1]='done';if(ls[L.i+1])ls[L.i+1][1]='cur'}S.xp+=10;S.goal=Math.min(1,S.goal+.15)}
+ S.lesson=null;render();toast('Progress saved')}
+
+function dict(){
+ const cats=['All',...new Set(DICT.map(d=>d[1]))];
+ const list=DICT.filter(d=>(S.cat==='All'||d[1]===S.cat)&&d[0].toLowerCase().includes(S.q.toLowerCase()));
+ return hdr('Dictionary')+`<div class="main"><input class="search" id="q" type="search" placeholder="Search a sign" aria-label="Search a sign" value="${S.q}" oninput="S.q=this.value;renderKeep()">
+ <div class="chips">${cats.map(c=>`<button class="pill" aria-pressed="${S.cat===c}" onclick="S.cat='${c}';render()">${c}</button>`).join('')}</div>
+ ${list.map(d=>`<div class="li"><button class="row grow" style="text-align:left" onclick="openSign('${d[0]}')"><span class="thumb">${ic('play')}</span><span class="grow"><b>${d[0]}</b><div class="sub">${d[1]}</div></span></button><button aria-label="Favorite ${d[0]}" aria-pressed="${!!S.fav[d[0]]}" onclick="S.fav['${d[0]}']=!S.fav['${d[0]}'];render()" style="color:${S.fav[d[0]]?'var(--sun)':'var(--mute)'}"><svg viewBox="0 0 24 24" style="fill:${S.fav[d[0]]?'currentColor':'none'}">${P.star}</svg></button></div>`).join('')||'<p class="sub">No signs found. Try another word or category.</p>'}</div>`}
+function renderKeep(){const p=S.q;render();const q=$('#q');q.focus();q.setSelectionRange(p.length,p.length)}
+
+const SESS=[['Beginner greetings circle','Dr. Samira B.','Certified ASL interpreter','Today, 6:00 PM',8,12],['Family signing workshop','Coach Yassine','Deaf educator','Wed, 5:30 PM',4,10],['Daily life conversation practice','Nadia K.','Sign language teacher','Fri, 7:00 PM',10,15]];
+const LINES={English:['Hello, how are you today?','I am learning sign language.','Can you sign a little slower, please?','Yes, that sign means thank you.'],Arabic:['مرحبا، كيف حالك اليوم؟','أنا أتعلم لغة الإشارة.','هل يمكنك الإشارة ببطء من فضلك؟','نعم، هذه الإشارة تعني شكرا.'],French:["Bonjour, comment allez-vous aujourd'hui ?","J'apprends la langue des signes.","Pouvez-vous signer plus lentement, s'il vous plait ?","Oui, ce signe veut dire merci."]};
+function chat(){
+ if(S.chat!==null){const c=CHATS[S.chat];return `<header class="top"><button class="ic" style="background:none" aria-label="Back" onclick="S.chat=null;render()">${ic('back')}</button><div class="grow"><b>${c[0]}</b><div class="sub">${c[1]}</div></div><button class="ic" aria-label="Start video call" onclick="startCall('private','${c[0]}')">${ic('video')}</button></header>
+ <div class="main" id="th"><p class="sub" style="text-align:center;margin-bottom:6px">Hold a text message to see it in sign language. Tap "Sign to text" on video messages.</p>${vmsg(false,'0:08',"Hi! Ready to practice greetings?")}${vmsg(true,'0:11','Yes, let us start with hello and thank you.')}${tmsg("Let's do 10 minutes tonight.",false)}</div>
+ <div class="compose"><button class="ic ${S.rec?'rec':''}" aria-label="${S.rec?'Stop recording':'Record video message'}" onclick="rec()">${ic('cam')}</button><input aria-label="Message" id="mi" placeholder="${S.rec?'Recording 0:03...':'Type a message'}" ${S.rec?'disabled':''}><button class="holdbtn" aria-label="Hold to preview your message in sign language" onpointerdown="holdStart(event,'input')" onpointerup="holdEnd()" onpointerleave="holdEnd()" onpointercancel="holdEnd()" oncontextmenu="return false">Sign</button><button class="ic" aria-label="Send" onclick="sendMsg()">${ic('send')}</button></div>`}
+ const pv=S.cs==='private';
+ const seg=`<div class="seg" role="group"><button aria-pressed="${pv}" onclick="S.cs='private';render()">Private</button><button aria-pressed="${!pv}" onclick="S.cs='community';render()">Community</button></div>`;
+ const priv=[0,1,3].map(i=>{const c=CHATS[i];return `<button class="li" onclick="S.chat=${i};render()"><span class="avatar" style="background:${c[3]}">${c[0][0]}</span><span class="grow"><b>${c[0]}</b><div class="sub">${c[1]}</div></span>${c[2]?`<span class="badge">${c[2]}</span>`:''}</button>`}).join('')+'<p class="sub" style="margin-top:14px">Private chats are only visible to you and the other person.</p>';
+ const comm=`<div class="card" style="margin-bottom:14px"><b>Supervised sessions</b><div class="sub">Group meetings led by certified professionals. Hosts can mute, correct and remove participants.</div></div>`+SESS.map((s,i)=>`<div class="card" style="margin-bottom:12px"><div class="row"><b class="grow">${s[0]}</b><span class="tag">Supervised</span></div><div class="sub" style="margin:4px 0 8px">${s[1]}, ${s[2]}<br>${s[3]}</div><div class="bar"><i style="width:${s[4]/s[5]*100}%"></i></div><div class="sub" style="margin:6px 0 10px">${s[4]} of ${s[5]} seats taken</div>${i===0?`<button class="btn" onclick="startCall('group','${s[0]}')">Join now</button>`:`<button class="btn ${S.joined[i]?'alt':''}" onclick="S.joined[${i}]=!S.joined[${i}];render()">${S.joined[i]?'Reserved. Tap to cancel':'Reserve a seat'}</button>`}</div>`).join('')+`<h2 style="margin-top:18px">Moderated rooms</h2>`+[['Beginners lounge','48 online'],['Parents and families','21 online']].map(r=>`<button class="li" onclick="toast('Rooms open in the full version')"><span class="avatar" style="background:#8A5CF6">${r[0][0]}</span><span class="grow"><b>${r[0]}</b><div class="sub">${r[1]}, moderated</div></span></button>`).join('')+`<div class="card" style="margin-top:14px"><b>Community rules</b><div class="sub">Be respectful. No recording without consent. Use Report to alert a moderator.</div></div>`;
+ return hdr('Chat',`<button class="ic" aria-label="New video call" onclick="startCall('private','Amira')">${ic('video')}</button>`)+`<div class="main">${seg}${pv?priv:comm}</div>`}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+const SP={English:['Nice to meet you.','Can we start the lesson?','Please repeat that.','See you tomorrow.'],Arabic:['سررت بلقائك.','هل يمكننا بدء الدرس؟','من فضلك أعد ذلك.','أراك غدا.'],French:['Enchante de vous rencontrer.','Pouvons-nous commencer la lecon ?','Repetez, s\'il vous plait.','A demain.']};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const gl=t=>t.replace(/[^\p{L}\s']/gu,'').toUpperCase();
+function tmsg(t,me){return `<div class="mw ${me?'me':''}"><button class="msg ${me?'me':''}" data-t="${esc(t)}" aria-label="${esc(t)}. Hold to see in sign language." onpointerdown="holdStart(event)" onpointerup="holdEnd()" onpointerleave="holdEnd()" onpointercancel="holdEnd()" oncontextmenu="return false">${esc(t)}</button><button class="mini" onclick="signPop(this.previousElementSibling.dataset.t,true)">Show in sign</button></div>`}
+function vmsg(me,dur,txt){return `<div class="mw ${me?'me':''}"><div class="msg vm ${me?'me':''}"><span class="thumb">${ic('play')}</span><small>Video message, ${dur}</small></div><button class="mini" onclick="const n=this.nextElementSibling;n.hidden=!n.hidden">Sign to text</button><small class="sub" ${S.set.captions?'':'hidden'}>Text (AI): ${esc(txt)}</small></div>`}
+let ht=null;
+function holdStart(e,mode){const t=mode==='input'?$('#mi').value.trim():e.currentTarget.dataset.t;clearTimeout(ht);ht=setTimeout(()=>{if(!t){toast('Type a message first');return}signPop(t,false)},350)}
+function holdEnd(){clearTimeout(ht);const p=$('#sp');if(p&&p.dataset.h==='1')p.remove()}
+function signPop(t,persist){const o=$('#sp');if(o)o.remove();const w=gl(t).split(/\s+/).filter(Boolean).slice(0,8);const d=document.createElement('div');d.id='sp';d.className='signpop';d.dataset.h=persist?'0':'1';if(!persist)d.style.pointerEvents='none';
+ d.innerHTML=`<div class="spc" role="dialog" aria-label="Text to sign language"><div class="row"><b class="grow">Text to sign (AI avatar)</b>${persist?`<button class="ic" aria-label="Close" onclick="document.getElementById('sp').remove()">${ic('close')}</button>`:''}</div><div class="video" style="margin:10px 0">${hand}<div class="cap">${esc(t)}</div></div><div class="chips" style="flex-wrap:wrap">${w.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div><p class="sub" style="margin-top:6px">${persist?'':'Release to close. '}AI sign output can be inaccurate.</p></div>`;$('#app').append(d)}
+function speak(t){try{if(!S.tts||!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang={English:'en-US',Arabic:'ar',French:'fr-FR'}[S.lang];speechSynthesis.speak(u)}catch(e){}}
+function linesHtml(){const C=S.call;if(!S.tr)return '<p class="sub">AI translation is off.</p>';
+ if(S.cm==='s2t')return C.lines.map(l=>`<div class="ln"><div class="sp">${C.type==='group'&&l.i%2?'Dr. Samira B. (host)':C.name} (signing)</div><div dir="auto">${LINES[S.lang][l.i]}</div><div class="cf">${l.c}% confidence${S.tts?', spoken aloud':''}</div></div>`).join('')+'<div class="sub live"><i class="pd"></i>Reading sign...</div>';
+ return C.sp.map(l=>`<div class="ln"><div class="sp">Speech heard</div><div dir="auto">${SP[S.lang][l.i]}</div><div class="cf">Signed by AI avatar, ${l.c}% confidence</div></div>`).join('')+'<div class="sub live"><i class="pd"></i>Listening to speech...</div>'}
+function scrollTl(){const t=$('#tl');if(t)t.scrollTop=t.scrollHeight}
+function startCall(type,name){clearInterval(S.iv);S.call={type,name,t:0,lines:[{i:0,c:91}],sp:[{i:0,c:90}]};S.hand=false;S.cm='s2t';render();let n=1,m=1;
+ S.iv=setInterval(()=>{if(!S.call){clearInterval(S.iv);return}
+  S.call.t++;const tm=$('#ct');if(tm)tm.textContent=fmt(S.call.t);
+  if(S.call.t%3===0&&S.tr){
+   if(S.cm==='s2t'){const i=n++%4;S.call.lines.push({i,c:84+Math.floor(Math.random()*13)});speak(LINES[S.lang][i])}
+   else{const i=m++%4;S.call.sp.push({i,c:84+Math.floor(Math.random()*13)});const vc=$('#vcap');if(vc)vc.textContent='AI avatar signing: '+gl(SP[S.lang][i])}
+   const tl=$('#tl');if(tl){tl.innerHTML=linesHtml();scrollTl()}}},1000)}
+function endCall(){clearInterval(S.iv);try{speechSynthesis.cancel()}catch(e){}S.call=null;render()}
+function setMode(m){S.cm=m;render();scrollTl()}
+function callView(){const C=S.call,g=C.type==='group',t2s=S.cm==='t2s';
+ const names=[['Dr. Samira B.','Host'],['Amira',''],['Karim',''],['You','']];
+ const cap=t2s?'AI avatar signing: '+gl(SP[S.lang][C.sp[C.sp.length-1].i]):(g?'Dr. Samira B. (host)':C.name);
+ return `<div class="sheet call"><header class="top" style="background:transparent;border:0;color:#fff"><div class="grow"><b>${C.name}</b><div style="font-size:12px;opacity:.75">${g?'Supervised group session':'Private call'}</div></div><span class="tag" style="background:var(--hot);color:#fff">Live <span id="ct">${fmt(C.t)}</span></span></header>
+ <div class="callbody"><div class="video" style="aspect-ratio:16/10;max-height:32vh;margin:0 12px">${hand}<div class="cap" id="vcap">${cap}</div><div class="pip">${ic('cam')}<span>You</span></div></div>
+ ${g?`<div class="tiles">${names.map((n,i)=>`<div class="tl2 ${i===0?'host':''}"><span class="avatar" style="width:34px;height:34px;background:${['#14A87E','#2D5BFF','#FF6B5B','#8A5CF6'][i]}">${n[0][0]}</span><small>${n[1]||n[0]}</small></div>`).join('')}</div>`:''}
+ <div class="trp"><div class="seg" role="group"><button aria-pressed="${!t2s}" onclick="setMode('s2t')">Sign to text and speech</button><button aria-pressed="${t2s}" onclick="setMode('t2s')">Speech to sign</button></div>
+ <div class="row" style="margin-bottom:8px"><b class="grow" style="font-size:13px">${t2s?'Live avatar output':'Live text output'}</b>${['English','Arabic','French'].map(l=>`<button class="pill sm" aria-pressed="${S.lang===l}" onclick="S.lang='${l}';render();scrollTl()">${l}</button>`).join('')}</div>
+ <div id="tl" class="tl">${linesHtml()}</div><p class="sub fine">${t2s?'The microphone is used only during the call.':'Speech uses your phone speaker.'} AI translation can be wrong. ${g?'The host can correct it.':'Confirm important details.'}</p></div></div>
+ <div class="ctrls"><button class="cb" aria-pressed="${S.tr}" onclick="S.tr=!S.tr;render()">${ic('chat')}<span>${S.tr?'Translate on':'Translate off'}</span></button>${t2s?'':`<button class="cb" aria-pressed="${S.tts}" onclick="S.tts=!S.tts;render()">${ic('video')}<span>${S.tts?'Speak on':'Speak off'}</span></button>`}${g?`<button class="cb" aria-pressed="${S.hand}" onclick="S.hand=!S.hand;render();toast(S.hand?'Hand raised':'Hand lowered')">${ic('star')}<span>Raise hand</span></button>`:''}<button class="cb" onclick="toast('Translation flagged for review')">${ic('gear')}<span>Flag</span></button><button class="cb end" aria-label="End call" onclick="endCall()">${ic('close')}<span>Leave</span></button></div></div>`}
+function rec(){S.rec=!S.rec;render();if(!S.rec)toast('Video preview ready to send')}
+function sendMsg(){const th=$('#th');const v=$('#mi').value.trim();th.insertAdjacentHTML('beforeend',v?tmsg(v,true):vmsg(true,'0:03','Video message sent'));$('#mi').value='';th.scrollTop=th.scrollHeight}
+
+function ranks(){
+ const fr=S.lg==='friends';const rows=fr?BOARD.filter((_,i)=>[0,2,4,6].includes(i)):BOARD;
+ return hdr('Leaderboard',stats())+`<div class="main"><div class="seg" role="group"><button aria-pressed="${!fr}" onclick="S.lg='weekly';render()">Weekly league</button><button aria-pressed="${fr}" onclick="S.lg='friends';render()">Friends</button></div>
+ <div class="card" style="margin-bottom:12px"><b>Sapphire league</b><div class="sub">Ends in 3 days. Top 3 move up. Opt out anytime in Settings.</div></div>
+ ${!fr?'<div class="zone">Promotion zone</div>':''}${rows.map((r,i)=>`${!fr&&i===3?'<div class="zone d" style="color:var(--mute)">Stay zone</div>':''}<div class="rank ${r[0]==='You'?'me':''}"><span class="n">${i+1}</span><span class="avatar" style="background:${['#2D5BFF','#FF6B5B','#14A87E','#8A5CF6'][i%4]}">${r[0][0]}</span><span class="grow">${r[0]}</span><span>${r[0]==='You'?S.xp:r[1]} XP</span></div>`).join('')}</div>`}
+
+function tg(k){S.set[k]=!S.set[k];render()}
+function profile(){
+ const T=[['captions','Captions on all video','Show text on lessons and messages'],['vibe','Vibration and visual alerts','No sound-only notifications'],['data','Data saver','Lower video quality on weak networks'],['device','Process camera on device','Video for AI feedback never leaves your phone'],['lefty','Left-handed mode','Mirror demonstrations']];
+ return hdr('Profile and settings')+`<div class="main"><div class="row"><span class="avatar" style="background:var(--pri);width:64px;height:64px;font-size:26px">Y</span><div class="grow"><b style="font-size:18px">Your name</b><div class="sub">Learning: American Sign Language</div></div></div>
+ <div class="stats"><div class="card stat"><b style="color:var(--hot)">${S.streak}</b><span class="sub">Day streak</span></div><div class="card stat"><b>${S.xp}</b><span class="sub">Total XP</span></div><div class="card stat"><b>6</b><span class="sub">Badges</span></div></div>
+ <div class="card" style="margin-bottom:16px"><div class="row"><div class="grow"><b>Streak freeze</b><div class="sub">1 available. Protects a missed day.</div></div><span class="chip">${ic('fire')}x1</span></div></div>
+ <h2>Learning</h2><div class="set"><span class="grow">Daily goal</span><b>10 min</b></div><div class="set"><span class="grow">Default video speed</span><b>1x</b></div><div class="set"><span class="grow">Sign language</span><b>ASL</b></div>
+ <h2 style="margin-top:18px">Accessibility and privacy</h2>${T.map(t=>`<button class="set" onclick="tg('${t[0]}')" role="switch" aria-checked="${S.set[t[0]]}"><span class="grow"><b style="font-weight:500">${t[1]}</b><div class="sub">${t[2]}</div></span><span class="sw" role="presentation" aria-checked="${S.set[t[0]]}"></span></button>`).join('')}
+ <div class="set"><span class="grow">Subscription</span><b style="color:var(--pri)">Free plan</b></div>
+ <button class="btn alt" style="margin-top:16px" onclick="toast('Data export requested')">Export or delete my data</button></div>`}
+
+const TABS=[['learn','Learn','home'],['dict','Dictionary','book'],['chat','Chat','chat'],['ranks','Ranks','trophy'],['profile','Profile','user']];
+function render(){
+ const v={learn,dict,chat,ranks,profile}[S.tab]();
+ $('#app').innerHTML=v+`<nav class="nav" aria-label="Main">${TABS.map(t=>`<button ${S.tab===t[0]?'aria-current="page"':''} onclick="go('${t[0]}')">${ic(t[2])}${t[1]}</button>`).join('')}</nav>`+(S.lesson?lessonView():'')+(S.call?callView():'');
+ const st=$('#stage');if(st)st.style.setProperty('animation-duration',S.speed===.5?'3.2s':'1.6s');
+ document.querySelectorAll('.hand').forEach(h=>h.style.animationDuration=S.speed===.5?'3.2s':'1.6s');
+}
+render();
+</script>
+</body>
+</html>
