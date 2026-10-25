@@ -1,17 +1,24 @@
 import { Text, View } from "react-native";
-import { BookOpen, Dumbbell, Trophy, UserRound } from "lucide-react-native";
+import {
+  BookOpen,
+  BookText,
+  MessageCircle,
+  Trophy,
+  UserRound,
+} from "lucide-react-native";
 
 import { learningColors, typography } from "../../tokens";
 
 export type DuoTab = {
   key: string;
   label: string;
-  icon: "learn" | "practice" | "leaderboard" | "profile";
+  icon: "learn" | "dictionary" | "messages" | "leaderboard" | "profile";
 };
 
 const icons = {
   learn: BookOpen,
-  practice: Dumbbell,
+  dictionary: BookText,
+  messages: MessageCircle,
   leaderboard: Trophy,
   profile: UserRound,
 };
@@ -44,7 +51,12 @@ export function DuoTabBar({ tabs, active }: DuoTabBarProps) {
             key={tab.key}
             accessibilityRole="tab"
             accessibilityState={{ selected }}
-            style={{ minWidth: 56, alignItems: "center", gap: 2 }}
+            style={{
+              minWidth: 56,
+              flex: 1,
+              alignItems: "center",
+              gap: 2,
+            }}
           >
             <View
               style={{

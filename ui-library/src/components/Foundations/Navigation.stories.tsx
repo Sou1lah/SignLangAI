@@ -18,8 +18,9 @@ export const Overview: Story = {
           active="learn"
           tabs={[
             { key: "learn", label: "Learn", icon: "learn" },
-            { key: "practice", label: "Practice", icon: "practice" },
-            { key: "leaderboard", label: "Leaders", icon: "leaderboard" },
+            { key: "dictionary", label: "Dictionary", icon: "dictionary" },
+            { key: "messages", label: "Messages", icon: "messages" },
+            { key: "leaderboard", label: "Leaderboard", icon: "leaderboard" },
             { key: "profile", label: "Profile", icon: "profile" },
           ]}
         />
