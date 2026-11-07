@@ -52,6 +52,7 @@ make dev
 - [`Memoire/templates/`](Memoire/templates/) — memo, research-note, and ADR templates.
 - [`thirdparty/`](thirdparty/) — ignored shallow clones for study.
 - [`thirdparty/MANIFEST.md`](thirdparty/MANIFEST.md) — licenses, ports, commands, and statuses.
+- [`thirdparty/sign-language-models/README.md`](thirdparty/sign-language-models/README.md) — organized sign-language AI source clones, study notes, and test results.
 - [`resources/`](resources/) — project resource inventories.
 - [`resources/ui-libraries.md`](resources/ui-libraries.md) — UI library references.
 - [`resources/resources.csv`](resources/resources.csv) — workbook export.

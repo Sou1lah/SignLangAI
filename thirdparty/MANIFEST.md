@@ -1,6 +1,6 @@
 # Third-party project manifest
 
-Checked 2026-10-24. Clones are isolated under this ignored directory; do not copy their source into first-party folders. Ports 4000–4008 are reserved in table order. Libraries and datasets are not standalone web services, so their assigned ports are reserved and no URL is expected. WLASL videos must not be downloaded.
+Checked 2026-11-03. Clones are isolated under this ignored directory; do not copy their source into first-party folders. Ports 4000–4008 are reserved in table order. Libraries and datasets are not standalone web services, so their assigned ports are reserved and no URL is expected. WLASL videos must not be downloaded.
 
 | Project | Status | Port / URL | Clone, install, and run commands | License | Date checked |
 |---|---|---|---|---|---|
@@ -13,5 +13,6 @@ Checked 2026-10-24. Clones are isolated under this ignored directory; do not cop
 | [LiveKit server](https://github.com/livekit/livekit) | installed — local Docker development server verified; stopped after check | 4006 | `docker run --rm -d --name signlangai-livekit -p 4006:7880 livekit/livekit-server:v1.13.10 --dev --bind 0.0.0.0 --port 7880`; stop: `docker stop signlangai-livekit` | Apache-2.0 | 2026-10-24 |
 | [ts-fsrs](https://github.com/open-spaced-repetition/ts-fsrs) | reference only — TypeScript library, not a standalone web service; upstream v6 requires Node.js 24+ | 4007 reserved | Clone: `git clone --depth 1 https://github.com/open-spaced-repetition/ts-fsrs.git thirdparty/ts-fsrs`; package install: `pnpm add ts-fsrs`; no server command | MIT | 2026-10-24 |
 | [WLASL](https://github.com/dxli94/WLASL) | reference only — dataset index only; do not download videos | 4008 reserved | Clone metadata/index only: `git clone --depth 1 https://github.com/dxli94/WLASL.git thirdparty/wlasl`; do not run `video_downloader.py` or download videos | unverified (no repository license detected) | 2026-10-24 |
+| [Sign-language AI study set](https://github.com/sign-language-translator/sign-language-translator), [Uni-Sign](https://github.com/ZechengLi19/Uni-Sign), [Signer](https://github.com/Almahil249/Signer) | downloaded — shallow source clones only; SLT CPU text-to-sign checks passed; Uni-Sign and Signer syntax checked; no training or weight files downloaded | none | See [`sign-language-models/README.md`](sign-language-models/README.md) for per-project setup and test notes | SLT: Apache-2.0; Uni-Sign: no root license file found; Signer: README claims MIT, but no root license file found | 2026-11-03 |
 
 The local LiveKit server uses development credentials and is for local testing only. Do not reuse its dev credentials outside localhost.

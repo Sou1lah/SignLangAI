@@ -18,3 +18,6 @@ __pycache__/
 thirdparty/*
 !thirdparty/README.md
 !thirdparty/MANIFEST.md
+!thirdparty/sign-language-models/
+thirdparty/sign-language-models/*
+!thirdparty/sign-language-models/README.md
